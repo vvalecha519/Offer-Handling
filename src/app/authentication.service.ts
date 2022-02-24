@@ -6,16 +6,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  userData: (Observable<firebase.User> | null);
 
   constructor(private angularFireAuth: AngularFireAuth) {
- this.userData = angularFireAuth.authState;
  }
 
 /* Sign up */
 SignUp(email: string, password: string) {
   this.angularFireAuth
-  .auth
   .createUserWithEmailAndPassword(email, password)
   .then(res => {
   console.log('You are Successfully signed up!', res);
@@ -27,7 +24,7 @@ SignUp(email: string, password: string) {
   
   /* Sign in */
   SignIn(email: string, password: string) {
-  this.angularFireAuth.auth.signInWithEmailAndPassword(email, password).then(res => {
+  this.angularFireAuth.signInWithEmailAndPassword(email, password).then(res => {
   console.log('Youre in!');
   })
   .catch(err => {
@@ -37,9 +34,7 @@ SignUp(email: string, password: string) {
   
   /* Sign out */
   SignOut() {
-  this.angularFireAuth
-  .auth
-  .signOut();
+  this.angularFireAuth.signOut();
   }
  
 }
