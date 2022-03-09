@@ -7,8 +7,15 @@ import { Observable } from 'rxjs';
 })
 export class AuthenticationService {
 
+  email : String =  "";
+
   constructor(private angularFireAuth: AngularFireAuth) {
  }
+
+isAuthenticated(){
+  console.log(this.email);
+return (!(this.email == ""));
+}
 
 /* Sign up */
 SignUp(email: string, password: string) {
@@ -16,6 +23,7 @@ SignUp(email: string, password: string) {
   .createUserWithEmailAndPassword(email, password)
   .then(res => {
   console.log('You are Successfully signed up!', res);
+  this.email = email;
   })
   .catch(error => {
   console.log('Something is wrong:', error.message);
@@ -23,15 +31,18 @@ SignUp(email: string, password: string) {
   }
   
   /* Sign in */
-  SignIn(email: string, password: string) {
-  this.angularFireAuth.signInWithEmailAndPassword(email, password).then(res => {
+  async SignIn(email: string, password: string) {
+    console.log(email)
+  await this.angularFireAuth.signInWithEmailAndPassword(email, password).then(res => {
   console.log('Youre in!');
+  this.email = email;
   })
   .catch(err => {
   console.log('Something went wrong:',err.message);
+  this.email = "";
   });
   }
-  
+
   /* Sign out */
   SignOut() {
   this.angularFireAuth.signOut();
