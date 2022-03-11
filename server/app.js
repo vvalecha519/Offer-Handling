@@ -30,7 +30,8 @@ const uuid = require('uuid');//this for unique id generation
 
 
 
-const serviceAccount = require('C:/Users/valev/OneDrive - University of Waterloo/Desktop/drop-off/dropoff-practice-firebase-adminsdk-vv0vl-eb5993597c.json')
+const serviceAccount = require('C:/Users/valev/OneDrive - University of Waterloo/Desktop/drop-off/dropoff-practice-firebase-adminsdk-vv0vl-eb5993597c.json');
+const { userInfo } = require('os');
 initializeApp({
 	credential: cert(serviceAccount),
 	storageBucket: 'gs://dropoff-practice.appspot.com'
@@ -115,3 +116,23 @@ app.post("/register", (req, res) => {
 app.post("/login", (req, res) => {
 	// our login logic goes here
 });
+
+app.get('/users/:email', async (req, res) => {
+	const properties = db.collection("/users/" + req.params.email + "/properties");
+	const snapshot = await properties.get();
+	const arrProperties = [];
+if (snapshot.empty) {
+  console.log('No matching documents.');
+  return;
+}  
+
+snapshot.forEach(doc => {
+	arrProperties.push(doc.data())
+});
+console.log(arrProperties);
+
+const sendBack = { properties : arrProperties
+}
+console.log(sendBack);
+  //res.send(req.params)
+})
