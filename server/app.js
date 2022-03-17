@@ -117,7 +117,7 @@ app.post("/login", (req, res) => {
 	// our login logic goes here
 });
 
-app.get('/users/:email', async (req, res) => {
+app.get('/properties/users/:email', async (req, res) => {
 	const properties = db.collection("/users/" + req.params.email + "/properties");
 	const snapshot = await properties.get();
 	const arrProperties = [];
@@ -134,5 +134,5 @@ console.log(arrProperties);
 const sendBack = { properties : arrProperties
 }
 console.log(sendBack);
-  //res.send(req.params)
+  res.send(sendBack)
 })
