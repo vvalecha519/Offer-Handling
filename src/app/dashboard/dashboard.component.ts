@@ -10,10 +10,9 @@ import { Property } from '../interfaces/property';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor(private auth : AuthenticationService, private  http:HttpClient,) { }
   properties: Property[] = new Array()
-  ngOnInit(): void {
+  
+  constructor(private auth : AuthenticationService, private  http:HttpClient,) { 
     console.log(this.auth.email);
 
 this.http.post('/api/upload', "asd").subscribe((res) => {
@@ -29,8 +28,8 @@ this.http.post('/api/upload', "asd").subscribe((res) => {
     //figure out how to put into properties
     alert('Uploaded Successfully.');
   })
-
-
+  }
+  ngOnInit(): void {
 }
 
 }

@@ -11,26 +11,10 @@
 	    </tr>
 	  </thead>
 	  <tbody>
-	    <tr>
-	      <td>59 Frey Crescent</td>
-	      <td>2022-05-12</td>
-	      <td>5</td>
-	      <td>
-		<button class="btn btn-primary" > Show details</button>
-	      </td>
-	    </tr>
-	    <tr>
-	      <td>221 Max Becker Drive </td>
-	      <td>2022-03-08</td>
-	      <td>8</td>
-	      <td>
-		<button class="btn btn-primary" > Show details</button>
-	      </td>
-	    </tr>
-	    <tr>
-	      <td>149 Watermill</td>
-	      <td>2022-03-25</td>
-	      <td>3</td>
+	    <tr *ngFor="let p of properties">
+	      <td>{{p.address}}</td>
+	      <td>{{p.date}}</td>
+	      <td>{{p.subCount}}</td>
 	      <td>
 		<button class="btn btn-primary" > Show details</button>
 	      </td>
