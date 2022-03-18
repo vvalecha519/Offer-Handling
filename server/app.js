@@ -129,10 +129,9 @@ if (snapshot.empty) {
 snapshot.forEach(doc => {
 	arrProperties.push(doc.data())
 });
+arrProperties.pop();
 console.log(arrProperties);
 
-const sendBack = { properties : arrProperties
-}
-console.log(sendBack);
-  res.send(sendBack)
+console.log(arrProperties);
+  res.send(arrProperties)
 })

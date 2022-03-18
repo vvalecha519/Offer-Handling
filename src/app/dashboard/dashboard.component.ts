@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { HttpClient } from '@angular/common/http';
+import { Property } from '../interfaces/property';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class DashboardComponent implements OnInit {
 
   constructor(private auth : AuthenticationService, private  http:HttpClient,) { }
-  properties:any;
+  properties: Property[] = new Array()
   ngOnInit(): void {
     console.log(this.auth.email);
 
@@ -19,8 +21,11 @@ this.http.post('/api/upload', "asd").subscribe((res) => {
     alert('Uploaded Successfully.');
   })
 
-      this.http.get(`/api/properties/users/${this.auth.email}`).subscribe((res) => {
+      this.http.get<Property[]>(`/api/properties/users/${this.auth.email}`).subscribe((res) => {
     console.log(res);
+    this.properties = res;
+    console.log(this.properties)
+
     //figure out how to put into properties
     alert('Uploaded Successfully.');
   })
