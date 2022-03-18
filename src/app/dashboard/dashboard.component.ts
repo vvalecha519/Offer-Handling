@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { HttpClient } from '@angular/common/http';
 import { Property } from '../interfaces/property';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { AddListingModalComponent } from '../add-listing-modal/add-listing-modal.component';
 
 
 @Component({
@@ -11,8 +13,9 @@ import { Property } from '../interfaces/property';
 })
 export class DashboardComponent implements OnInit {
   properties: Property[] = new Array()
-  
-  constructor(private auth : AuthenticationService, private  http:HttpClient,) { 
+  modalRef: MdbModalRef<AddListingModalComponent> | null = null;
+
+  constructor(private auth : AuthenticationService, private  http:HttpClient,private modalService: MdbModalService) { 
     console.log(this.auth.email);
 
 this.http.post('/api/upload', "asd").subscribe((res) => {
@@ -31,5 +34,9 @@ this.http.post('/api/upload', "asd").subscribe((res) => {
   }
   ngOnInit(): void {
 }
+
+openModal() {
+    this.modalRef = this.modalService.open(AddListingModalComponent)
+  }
 
 }

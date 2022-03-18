@@ -11,12 +11,15 @@ import { AngularFireModule } from "@angular/fire/compat";
  import {HttpClientModule} from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
+import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { AddListingModalComponent } from './add-listing-modal/add-listing-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    HomeComponent
+    HomeComponent,
+    AddListingModalComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -24,7 +27,8 @@ import { HomeComponent } from './home/home.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MdbModalModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
