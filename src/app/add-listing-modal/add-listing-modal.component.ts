@@ -8,6 +8,9 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 })
 export class AddListingModalComponent implements OnInit {
 
+  m_address : String = ''; 
+  m_offerDate : String = '';
+
   constructor(public modalRef: MdbModalRef<AddListingModalComponent>) { }
 
   ngOnInit(): void {
