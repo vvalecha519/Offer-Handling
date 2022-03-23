@@ -11,6 +11,7 @@ export class ListingDetailsComponent implements OnInit {
   constructor(public modalRef: MdbModalRef<ListingDetailsComponent>) { }
 
   ngOnInit(): void {
+    //make request to backend for the listing
   }
 
 }

@@ -43,6 +43,7 @@ openModal() {
   }
 
   openPropertyDetails(p: Property){
+    
   this.listingModalRef = this.modalService.open(ListingDetailsComponent);
   }
 

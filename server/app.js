@@ -50,11 +50,6 @@ app.get('/getData', (req, res) => {
 })
 
 app.post('/upload', upload.any(), async (req, res) => {
-	console.log(req.files[0].path)
-	console.log(req.body.code);
-	console.log(req.body.listEmail);
-	console.log(req.body.buyEmail);
-
 	//loop through codes for that email address and then add if it exists
 	//const property = db.collection('users').doc(req.body.listEmail).collection('properties').doc(req.body.code);
 	const str = 'users/' + req.body.listEmail + '/properties/' + req.body.code;
@@ -76,7 +71,7 @@ app.post('/upload', upload.any(), async (req, res) => {
 			console.log(count);
 			property.set({
 				subCount: count,
-			}, {merge:true});
+			}, { merge: true });
 		} else {
 			console.log("Buyer exists");
 		}
@@ -121,17 +116,23 @@ app.get('/properties/users/:email', async (req, res) => {
 	const properties = db.collection("/users/" + req.params.email + "/properties");
 	const snapshot = await properties.get();
 	const arrProperties = [];
-if (snapshot.empty) {
-  console.log('No matching documents.');
-  return;
-}  
+	if (snapshot.empty) {
+		console.log('No matching documents.');
+		return;
+	}
 
-snapshot.forEach(doc => {
-	arrProperties.push(doc.data())
-});
-arrProperties.pop();
-console.log(arrProperties);
-
-console.log(arrProperties);
-  res.send(arrProperties)
+	snapshot.forEach(doc => {
+		console.log(doc.id);
+		arrProperties.push(
+			{
+				address: doc.data().address,
+				date: doc.data().date,
+				subCount: doc.data().subCount,
+				id: doc.id
+			}
+		)
+	});
+	arrProperties.pop();
+	console.log(arrProperties);
+	res.send(arrProperties)
 })
