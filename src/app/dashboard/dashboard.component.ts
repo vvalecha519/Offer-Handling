@@ -21,10 +21,6 @@ export class DashboardComponent implements OnInit {
   constructor(private auth : AuthenticationService, private  http:HttpClient,private modalService: MdbModalService) { 
     console.log(this.auth.email);
 
-this.http.post('/api/upload', "asd").subscribe((res) => {
-    console.log(res);
-    alert('Uploaded Successfully.');
-  })
 
       this.http.get<Property[]>(`/api/properties/users/${this.auth.email}`).subscribe((res) => {
     //console.log(res[0].date.getDate());
@@ -32,7 +28,6 @@ this.http.post('/api/upload', "asd").subscribe((res) => {
     console.log(this.properties)
     console.log(this.properties[0].date.toDateString)
     //figure out how to put into properties
-    alert('Uploaded Successfully.');
   })
   }
   ngOnInit(): void {

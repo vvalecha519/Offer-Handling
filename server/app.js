@@ -30,7 +30,7 @@ const uuid = require('uuid');//this for unique id generation
 
 
 
-const serviceAccount = require('C:/Users/valev/OneDrive - University of Waterloo/Desktop/drop-off/dropoff-practice-firebase-adminsdk-vv0vl-eb5993597c.json');
+const serviceAccount = require('C:/Users/valev/OneDrive - University of Waterloo/Desktop/dropoff-practice-firebase-adminsdk-vv0vl-eb5993597c.json');
 const { userInfo } = require('os');
 initializeApp({
 	credential: cert(serviceAccount),
@@ -112,7 +112,7 @@ app.post("/login", (req, res) => {
 	// our login logic goes here
 });
 
-app.get('/properties/users/:email', async (req, res) => {
+app.get('/properties/users/:email', async (req, res) => { //get all the listings
 	const properties = db.collection("/users/" + req.params.email + "/properties");
 	const snapshot = await properties.get();
 	const arrProperties = [];
@@ -136,3 +136,9 @@ app.get('/properties/users/:email', async (req, res) => {
 	console.log(arrProperties);
 	res.send(arrProperties)
 })
+
+//add properties
+app.post('/addproperty/:email',(req, res) => {
+	// our register logic goes here...
+	console.log(req.params.email);
+});

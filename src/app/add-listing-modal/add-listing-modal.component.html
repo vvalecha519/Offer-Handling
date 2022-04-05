@@ -1,26 +1,23 @@
 <div class="modal-header">
 	<h5 class="modal-title" id="exampleModalLabel">Add New Listing</h5>
-	<button
-	  type="button"
-	  class="btn-close"
-	  aria-label="Close"
-	  (click)="modalRef.close()"
-	></button>
-      </div>
-      <div>
-	      <div class="option">
-		<h6>Address</h6>
-	       <input type="text" id="address" name="addy" placeholder="Address" [(ngModel)]="m_address">
-	       </div>
-	      <div class="option">
-		<h6>Offer Date</h6>
-	       <input type="date" id="offerDate" name="offerDate" placeholder="Date" [(ngModel)]="m_offerDate">
-	       </div>
-	      <div class="option">
-		<h6>Offer Cutoff Time</h6>
-	       <input type="time" id="offerDate" name="offerDate" placeholder="Date" [(ngModel)]="m_offerDate">
-	       </div>
-      </div>
-      <div class="modal-footer">
-	<button type="button" class="btn btn-primary btn-lg btn-block w-100">Add Listing</button>
-      </div>
+	<button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+</div>
+<div>
+	<div class="pad">
+		<div class="option p5">
+			<h6>Address</h6>
+			<input type="text" id="address" name="addy" placeholder="Address" [(ngModel)]="m_address">
+		</div>
+		<div class="option">
+			<h6>Offer Date</h6>
+			<input type="date" id="offerDate" name="offerDate" placeholder="Date" [(ngModel)]="m_offerDate">
+		</div>
+		<div class="option">
+			<h6>Offer Cutoff Time</h6>
+			<input type="time" id="offerDate" name="offerDate" placeholder="Date" [(ngModel)]="m_offerDate">
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary btn-lg btn-block w-100" (click)="addListing()">Add Listing</button>
+	</div>
+</div>
