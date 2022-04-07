@@ -27,6 +27,13 @@ const { initializeApp, applicationDefault, cert } = require('firebase-admin/app'
 const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
 const { getStorage } = require('firebase-admin/storage');
 const uuid = require('uuid');//this for unique id generation
+var bodyParser = require('body-parser')
+
+// create application/json parser
+var jsonParser = bodyParser.json()
+
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
 
@@ -123,6 +130,7 @@ app.get('/properties/users/:email', async (req, res) => { //get all the listings
 
 	snapshot.forEach(doc => {
 		console.log(doc.id);
+		if(doc.id != 'na')
 		arrProperties.push(
 			{
 				address: doc.data().address,
@@ -132,13 +140,32 @@ app.get('/properties/users/:email', async (req, res) => { //get all the listings
 			}
 		)
 	});
-	arrProperties.pop();
 	console.log(arrProperties);
 	res.send(arrProperties)
 })
 
 //add properties
-app.post('/addproperty/:email',(req, res) => {
+app.post('/addproperty/:email',jsonParser,async (req, res) => {
 	// our register logic goes here...
 	console.log(req.params.email);
+	console.log(req);
+
+	console.log(req.body.offerDate)
+	console.log(req.body.offerTime)
+	console.log(req.body.address)	
+	console.log(req.body.offerTime.substring(0,2))
+	console.log(req.body.offerTime.substring(3,5))
+
+
+d = new Date(req.body.offerDate)
+d.setHours(req.body.offerTime.substring(0,2))
+d.setMinutes(req.body.offerTime.substring(3,5))
+	const newProperty = await db.collection('users').doc(req.params.email).collection('properties').add({
+  address: req.body.address,
+  subCount : 0,
+  date : d,
+});
+//create 0 subs
+db.collection('users').doc(req.params.email).collection('properties').doc(newProperty.id).collection('subscribers').doc('na').set({});
+console.log('Added document with ID: ', newProperty.id);
 });
