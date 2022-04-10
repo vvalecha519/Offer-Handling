@@ -144,6 +144,34 @@ app.get('/properties/users/:email', async (req, res) => { //get all the listings
 	res.send(arrProperties)
 })
 
+
+//get property
+app.get('/properties/users/:email/:propertyId', async (req, res) => { //get all the listings
+	const subscribers = db.collection("/users/" + req.params.email + "/properties/"+ req.params.propertyId + "/subscribers");
+	const snapshot = await subscribers.get();
+	const arrSubscribers = [];
+	if (snapshot.empty) {
+		console.log('No matching documents.');
+		return;
+	}
+
+	snapshot.forEach(doc => {
+		console.log(doc.id);
+		if(doc.id != 'na')
+		arrSubscribers.push(
+			{
+				email: doc.data().email,
+				fileName: doc.data().offer,
+			}
+		)
+	});
+	console.log(arrSubscribers);
+	res.send(arrSubscribers)
+})
+
+
+
+
 //add properties
 app.post('/addproperty/:email',jsonParser,async (req, res) => {
 	// our register logic goes here...

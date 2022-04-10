@@ -5,7 +5,6 @@ import { Property } from '../interfaces/property';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { AddListingModalComponent } from '../add-listing-modal/add-listing-modal.component';
 import { ListingDetailsComponent } from '../listing-details/listing-details.component';
-//import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -37,9 +36,8 @@ openModal() {
   }
 
   openPropertyDetails(p: Property){
-    
-  this.listingModalRef = this.modalService.open(ListingDetailsComponent);
-  //this.listingModalRef.m_listingId = p.id;
+  this.listingModalRef = this.modalService.open(ListingDetailsComponent, {
+      data: { m_listingId: p.id },
+    });
   }
-
 }

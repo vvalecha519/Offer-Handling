@@ -12,15 +12,18 @@ import { Subscriber } from '../interfaces/subscriber';
 export class ListingDetailsComponent implements OnInit {
 
 m_subscriber: Subscriber[] = new Array();
-m_listingId: String = new String();
+m_listingId: string | null = null;
 
   constructor(public modalRef: MdbModalRef<ListingDetailsComponent>, private auth : AuthenticationService, private  http:HttpClient) { 
-
-    this.http.get<Subscriber[]>(`/api/properties/users/${this.auth.email}`).subscribe((res) => {
-  })
+    console.log(this.m_listingId);
   }
 
   ngOnInit(): void {
+    console.log(this.m_listingId);
+    this.http.get<Subscriber[]>(`/api/properties/users/${this.auth.email}/${this.m_listingId}`).subscribe((res) => {
+      console.log(res);
+      this.m_subscriber = res; 
+  })
     //make request to backend for the listing
   }
 
