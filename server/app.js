@@ -197,3 +197,21 @@ d.setMinutes(req.body.offerTime.substring(3,5))
 db.collection('users').doc(req.params.email).collection('properties').doc(newProperty.id).collection('subscribers').doc('na').set({});
 console.log('Added document with ID: ', newProperty.id);
 });
+
+//download individual files 
+
+app.get('/offer/:offerID', async (req, res) => {
+	// express.js
+	console.log(req.params.offerID)
+	    const options = {
+      // The path to which the file should be downloaded, e.g. "./file.txt"
+      destination: "./downloadFiles/" + req.params.offerID,
+    };
+	await bucket.file(req.params.offerID).download(options);
+	await res.download(`./downloadFiles/${req.params.offerID}`, 
+	(error)=>{
+        console.log("Error : ", error)
+    });
+
+    //delete files as created
+      });

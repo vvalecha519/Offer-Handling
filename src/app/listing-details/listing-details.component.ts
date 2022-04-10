@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { AuthenticationService } from '../authentication.service';
 import { Subscriber } from '../interfaces/subscriber';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-listing-details',
@@ -25,6 +26,15 @@ m_listingId: string | null = null;
       this.m_subscriber = res; 
   })
     //make request to backend for the listing
+  }
+
+  downloadPdf(fileName: string): void {
+    console.log(fileName);
+    this.http.get(`/api/offer/${fileName}`, {responseType:'blob'}).subscribe((res) => {
+      console.log('worked!');
+      let downloadURL = window.URL.createObjectURL(res);
+    saveAs(downloadURL);
+  })
   }
 
 }
