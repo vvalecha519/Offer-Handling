@@ -37,4 +37,16 @@ m_listingId: string | null = null;
   })
   }
 
+  downloadAll(){
+    if(confirm("Are you sure to delete ")) {
+      console.log("Implement delete functionality here");
+
+    this.http.get(`/api/downloadAll/${this.auth.email}/${this.m_listingId}`, {responseType:'blob'}).subscribe((res) => {
+      console.log('worked!');
+      let downloadURL = window.URL.createObjectURL(res);
+    saveAs(downloadURL);
+  })
+    }
+  }
+
 }

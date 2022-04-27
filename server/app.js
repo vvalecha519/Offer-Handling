@@ -26,8 +26,10 @@ const app = express();
 const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
 const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
 const { getStorage } = require('firebase-admin/storage');
+const fs = require('fs')
 const uuid = require('uuid');//this for unique id generation
 var bodyParser = require('body-parser')
+const AdmZip = require("adm-zip");
 
 // create application/json parser
 var jsonParser = bodyParser.json()
@@ -214,4 +216,52 @@ app.get('/offer/:offerID', async (req, res) => {
     });
 
     //delete files as created
+      });
+
+      
+app.get('/downloadAll/:email/:propertyId', async (req, res) => {
+	console.log(req.params.email)
+
+	const subscribers = db.collection("/users/" + req.params.email + "/properties/"+ req.params.propertyId + "/subscribers");
+	const snapshot = await subscribers.get();
+	if (snapshot.empty) {
+		console.log('No matching documents.');
+		return;
+	}
+
+	snapshot.forEach(async doc =>  {
+		console.log(doc.id)
+		console.log(doc.data().offer)
+
+const folderName = `./${req.params.propertyId}`
+
+try {
+  if (!fs.existsSync(folderName)) {
+    fs.mkdirSync(folderName)
+  }
+} catch (err) {
+  console.error(err)
+}
+
+
+		if(doc.id != 'na'){
+			const options = {
+				// The path to which the file should be downloaded, e.g. "./file.txt"
+				destination: `./${req.params.propertyId}/` + doc.data().offer,
+			      };
+				  await bucket.file(doc.data().offer).download(options);
+		}
+	});
+	const zip = new AdmZip();
+	const outputFile = `${req.params.propertyId}.zip`
+	zip.addLocalFolder(`./${req.params.propertyId}`);
+	zip.writeZip(outputFile);
+	console.log(`Created ${outputFile} successfully`);
+
+
+	await res.download(`./${req.params.propertyId}.zip`, 
+	(error)=>{
+        console.log("Error : ", error)
+    });
+
       });
